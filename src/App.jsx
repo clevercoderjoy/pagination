@@ -6,6 +6,7 @@ function App() {
   const apiUrl = "https://8fd85044d6f4480a8a44b0838cc19de9.api.mockbin.io/";
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 10;
   const getData = async () => {
     try
@@ -14,10 +15,12 @@ function App() {
       if (response.status === 200)
       {
         setData(response.data);
+        setLoading(false);
       }
     }
     catch (e)
     {
+      setLoading(true)
       throw new Error(e);
     }
   }
@@ -37,6 +40,7 @@ function App() {
   return (
     <>
       <div>
+        {loading && <div style={{ textAlign: "center", margin: "1rem", fontWeight: "bold", fontSize: "5rem" }}>LOADING...</div>}
         {
           itemsToDisplay.map((person, index) => <div key={index} style={{ border: "2px solid black", margin: "1rem", padding: "0.5rem" }}>
             <div>City: {person.city}</div>
